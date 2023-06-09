@@ -1,0 +1,120 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>br.com.treinaweb</groupId> <!--Empresa que esta desenvolvendo o projeto -->
+	<artifactId>tw-struts2-fundamentos</artifactId> <!--projeto que esta sendo desenvolvido  -->
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging> <!-- Empacotamento -->
+	<name>TreinaWeb  - Fundamentos de Struts2</name>
+
+	<properties>
+		<!-- Especificando para o Maven a versao da JDK-->
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>javax.servlet</groupId> <!-- Dependencia criada para que erro de javax.servlet apontado dentro da JSP seja eliminado-->
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
+			<scope>provided</scope> <!-- Permite indicar de onde a dependencia sera obtida "provided" indica que  servlet sera provida internamente -->
+
+		</dependency>
+
+
+		<dependency>
+			<!-- Struts2 -->
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-core</artifactId>
+			<version>2.5.18</version>
+		</dependency>
+		
+		<!-- Acrescentando o JSON-->
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-json-plugin</artifactId>
+			<version>2.5.18</version> <!--a versao por padrao deve ser a mesma do struts2-core -->
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.11.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>2.11.1</version>
+		</dependency>
+
+		<!-- JPA -->
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>javax.persistence</artifactId>
+			<version>2.2.1</version>
+		</dependency>
+
+		<!-- Provider da JPA (Hibernate)-->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.3.7.Final</version>
+		</dependency>
+
+		<!-- Driver MySQL-->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.13</version>
+		</dependency>
+
+		<!-- JAXb (arquivo persistence.xml)-->
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+
+	</dependencies>
+
+	<!-- Construção da aplicação -->
+	<build>
+		<finalName>struts2-fundamentos</finalName> <!-- Nome Final do Artefato (war), o Maven irá gerar um war com esse nome que atribuimos (NOME QUE DEVE SER UTILIZADO NA PESQUISA DA URL) -->
+		<!--Caso o finalName não seja configurado, o Maven atribuiria um nome padrao ao nosso artefato, podendo gerar confusao na hora de chamar na url -->
+
+		<plugins>
+
+			<plugin>
+				<!-- Necessario para consertar erro da linha 1-->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.3.1</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId> 
+				<artifactId>jetty-maven-plugin</artifactId> <!-- Nome do Artefato do plugin acima para o Maven -->
+				<version>9.4.14.v20181114</version>
+
+				<!-- Configuracoes do nosso plugin (porta do jetty, especifica onde esta o web.xml)-->
+				<configuration>
+
+					<webApp>
+						<!--Configura aonde a aplicacao será disponibilizada dentro do Jetty -->
+						<contextPath>/${project.build.finalName}</contextPath> <!-- "/${}" captura o finalName localizado dentro da tag Build informando ao Jetty qual nome deveremos apontar ao subir o projeto -->
+					</webApp>
+
+					<scanTargets>
+						<!-- Especifica onde esta o nosso web.xml para ser lido pelo Jetty-->
+						<scanTarget>
+  					src/main/webapp/WEB-INF/web.xml
+  				</scanTarget>
+					</scanTargets>
+
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

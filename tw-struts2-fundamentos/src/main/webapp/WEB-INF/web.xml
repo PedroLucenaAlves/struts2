@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	<display-name>tw-struts2-fundamentos</display-name>
+
+	<!-- web.xml serve para mostrar como o servidor irá conversar com a aplicacao 
+		que esta rodando -->
+
+	<welcome-file-list> <!-- pagina de boas vindas -->
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	
+	<!-- Relacao entre o servidor e a aplicacao (filtro struts2) -->
+	<filter>
+		<filter-name>struts2-filter</filter-name> <!-- Nome do Filtro -->
+		<filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class> <!-- Classe StrutsPrepareAndExecuteFilter (ctrl / shift / h) EXIBE HIERARQUIA DE FILTROS -->
+		<init-param> <!-- parametros de inicializacao -->
+			<param-name>default</param-name> <!-- arquivo de inicializacao padrao -->
+			<param-value>src/main/resoucers/struts.xml</param-value>
+		</init-param>
+	</filter>
+	
+	<!-- Rotas que serao filtradas -->
+	<filter-mapping>
+		<filter-name>struts2-filter</filter-name>
+		<url-pattern>/*</url-pattern> <!-- URLS que serão encaminhadas para o filtro "/*" aponta que qualquer rota sera encaminhada para o nosso filtro do struts2-->
+	</filter-mapping>
+	
+</web-app>

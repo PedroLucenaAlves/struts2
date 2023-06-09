@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+             version="2.2">
+	<persistence-unit name="tw-struts2-fundamentos">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> <!-- Provedor JPA que será utilizado -->
+		
+		<class>br.com.treinaweb.struts2.entidades.Pessoa</class> <!-- Classe Entidade que representa uma tabela no banco de dados -->
+		
+		<!-- OBS:Analisar cruso de JPA para melhor entendimento das funcoes -->
+		<properties>
+			<!-- JPA (CORE) -->
+			<property name="javax.persistence.jdbc.driver"
+				value="com.mysql.jdbc.Driver"></property> <!-- Driver de conexao -->
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:mysql://localhost:3306/twstruts2?useTimezone=true&amp;serverTimezone=UTC"></property> <!-- URL de acesso ao banco (porta do banco "3306" nome do nosso banco "twstruts2" -->
+			<property name="javax.persistence.jdbc.user" value="root"></property> <!-- Usuario -->
+			<property name="javax.persistence.jdbc.password"
+				value="admin"></property>
+
+			<!-- Hibernate -->
+			<property name="hibernate.dialect"
+				value="org.hibernate.dialect.MySQL8Dialect"></property> <!-- dialeto MySQL8 -->
+			<property name="hibernate.hbm2ddl.auto" value="update"></property> <!-- update ira sempre atualizar a tabela para a funcao mais recente -->
+			<property name="hibernate.show_sql" value="true"></property> <!-- Exibde os comandos SQL no console -->
+
+		</properties>
+	</persistence-unit>
+</persistence>

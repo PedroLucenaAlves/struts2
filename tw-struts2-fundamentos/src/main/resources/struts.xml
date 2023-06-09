@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN" "http://struts.apache.org/dtds/struts-2.5.dtd"> <!-- Apontamento do struts no seu DOCTYPE -->
+
+	<!-- TAG PAI -->
+<struts>
+	<constant name="struts.devMode" value="true"></constant>
+	
+	<!-- COnjunto de rotas -->                       <!-- struts-default extende todas as estruturas do struts -->
+	<package name="tw-struts2-fundamentos" extends="struts-default, json-default"> <!-- "extends tras algumas classes, filtros, etc ao struts para ajudalo a tratalas -->
+																	<!--para extender mais de uma funcao no struts, basta colocar a virgula dentro do extends, nesse caso habilitamos o json aqui  -->
+		<action name="index"> <!-- nome apontado na url -->
+			<result>/index.jsp</result> <!-- Encaminha a nossa action para a jsp apontada -->
+		</action>
+		
+		<action name="teste" class="br.com.treinaweb.struts2.actions.TesteAction">
+			<result name="TESTE">/teste.jsp</result> <!-- Caso o struts pegue o retorno da nossa action e ele seja o valor do name, ele entao ira direcionar para a jsp apontada -->
+		</action>
+		
+		<!-- Ao chamar a action paginaCadastroPessoa, clicando no submit "Salvar" ele ira enviar as informacoes para a action do form da jsp, no caso a inserirPessoa -->
+		
+		<action name="mostrarPessoa" class="br.com.treinaweb.struts2.controllers.PessoaController" method="mostrar">
+			<result name="success">/pages/pessoa/mostrarPessoa.jsp</result> <!-- Apos o struts consultar o retorno do metodo apontado em method, ele ira direcionar para a outra jsp -->
+			<result name="error">/pages/pessoa/listarPessoas.jsp</result> <!-- Apos o struts consultar o retorno do metodo apontado em method, ele ira direcionar para a outra jsp -->
+		</action>
+		
+		<action name="listarPessoas" class="br.com.treinaweb.struts2.controllers.PessoaController" method="listar">
+			<result name="success">/pages/pessoa/listarPessoas.jsp</result>  <!-- sucess e o resultado da nossa constante -->
+			<result name="error">/pages/pessoa/listarPessoas.jsp</result>  
+		</action>
+		
+		<action name="paginaCadastroPessoa">
+			<result>/pages/pessoa/cadastrarPessoa.jsp</result>
+		</action>
+		
+		<action name="inserirPessoa" class="br.com.treinaweb.struts2.controllers.PessoaController" method="inserir">
+			<result name="success" type="redirect">listarPessoas.action</result> <!-- o type apontou um redirect, por isso o listarPessoas ficou com um .action no final, para apontar que o success do result ira redirecioanr para essa action -->
+			<result name="error">/pages/pessoa/cadastrarPessoa.jsp</result>
+			<result name="input">/pages/pessoa/cadastrarPessoa.jsp</result> <!-- Esse input é um possível erro do método validate que chama o AddFieldError (no nosso método sobrescrito) da classe 
+			ActionSuport que irá retorna para a jsp referida com o erro apontado -->
+		</action>
+		
+		<action name="pesquisarPorNome" class="br.com.treinaweb.struts2.controllers.PessoaController" method="pesquisarPorNome">
+			<result type="json" name="success"> <!-- E possivel configurar parametros dentro do result -->
+				<param name="root">
+					pessoasPorNome <!-- Ira exibir no json apenas o pessoasPorNome, pois no parametro estamos especificando apenas ele -->
+				</param>
+			</result> <!-- Ao utilizar a query na url ?nome=(alguma letra que deseja buscar) ele ira exibir um doc json com os resultados -->
+		
+		</action>
+		
+	</package> 
+</struts>
